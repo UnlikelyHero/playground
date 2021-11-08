@@ -8,8 +8,6 @@ import { Hero } from '../hero';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  title = 'My Heroes';
-
   constructor() { }
 
   heroes = HEROES;
