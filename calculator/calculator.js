@@ -12,10 +12,13 @@ class Calculator {
 
   };
 
-  delete() {};
+  delete() {
+    this.currOperand = this.currOperand.toString().slice(0, -1);
+  };
 
   appendNumber(number) {
     if (number === '.' && this.currOperand.includes('.')) return;
+
     this.currOperand = this.currOperand.toString() + number.toString();
   };
 
@@ -29,11 +32,64 @@ class Calculator {
     this.currOperand = '';
   };
 
-  compute() {};
+  compute() {
+    let computation;
+    const prev = parseFloat(this.prevOperand);
+    const curr = parseFloat(this.currOperand);
+    if (isNaN(prev) || isNaN(curr)) return;
+
+    switch (this.operation) {
+      case '+':
+        computation = prev + curr;
+        break;
+      case '-':
+        computation = prev - curr;
+        break;
+      case 'x':
+        computation = prev * curr;
+        break;
+      case '÷':
+        computation = prev / curr;
+        break;
+      default:
+        return
+    }
+
+    this.currOperand = computation;
+    this.operation = undefined;
+    this.prevOperand = '';
+  };
+
+  getDisplayNumber(number) {
+    const strNumber = number.toString();
+    const intDigits = parseFloat(strNumber.split('.')[0])
+    const decDigits = strNumber.split('.')[1]
+    let intDisplay
+
+    if (isNaN(intDigits)) {
+      intDisplay = ''
+    } else {
+      intDisplay = intDigits.toLocaleString('en', { maximumFractionDigits: 0 })
+    }
+
+    if (decDigits != null) {
+      return `${intDisplay}.${decDigits}`
+    } else {
+      return intDisplay;
+    }
+
+    // const floatNumber = parseFloat(number);
+    // if (isNaN(floatNumber)) return '';
+    // return floatNumber.toLocaleString('en')
+  }
 
   updateDisplay() {
-    this.currOperandText.innerText = this.currOperand;
-    this.prevOperandText.innerText = this.prevOperand;
+    this.currOperandText.innerText = this.getDisplayNumber(this.currOperand);
+    if (this.operation) {
+      this.prevOperandText.innerText = `${this.getDisplayNumber(this.prevOperand)} ${this.operation}`;
+    } else {
+      this.prevOperandText.innerText = '';
+    }
   };
 }
 
@@ -59,6 +115,21 @@ operationButtons.forEach(button => {
     calculator.chooseOperation(button.innerText)
     calculator.updateDisplay();
   })
+})
+
+equalsButton.addEventListener('click', button => {
+  calculator.compute();
+  calculator.updateDisplay();
+})
+
+allClearButton.addEventListener('click', button => {
+  calculator.clear();
+  calculator.updateDisplay();
+})
+
+deleteButton.addEventListener('click', button => {
+  calculator.delete();
+  calculator.updateDisplay();
 })
 
 /**
