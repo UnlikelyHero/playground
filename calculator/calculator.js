@@ -77,10 +77,6 @@ class Calculator {
     } else {
       return intDisplay;
     }
-
-    // const floatNumber = parseFloat(number);
-    // if (isNaN(floatNumber)) return '';
-    // return floatNumber.toLocaleString('en')
   }
 
   updateDisplay() {
