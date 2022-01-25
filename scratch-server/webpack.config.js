@@ -9,6 +9,7 @@ module.exports = {
     path: path.resolve("dist"),
     publicPath: "/",
   },
+  devtool: 'source-map',
 
   module: {
     rules: [
@@ -16,7 +17,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: "babel-loader"
-      }.
+      },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]

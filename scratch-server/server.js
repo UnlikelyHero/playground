@@ -17,7 +17,7 @@ app.use(express.static("dist"));
 app.get("/", (req, res) => {
   res.sendFile(HTML_FILE, function(err) {
     if (err) {
-      res.status(500.send(err);)
+      res.status(500).send(err);
     }
   });
 });
