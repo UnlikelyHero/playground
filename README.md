@@ -1,6 +1,5 @@
 # My Playground
 This Playground Repo is meant to house all of the small projects I created to exercise a specified technology.
-
 #
 
 ## Angular - Tour of Heroes
